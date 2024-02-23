@@ -15,6 +15,7 @@ export class TrainService {
   addCronJob(testId: string, schedule: string, limit?: number) {
     // Create a new cron job
     const job = new CronJob(schedule, async () => {
+      // Get the count of event logs of the test
       const eventLogs = await this.prismaService.eventLog.findMany({
         where: {
           version: {
@@ -34,6 +35,9 @@ export class TrainService {
         },
         take: limit,
       });
+
+      // Reverse the data
+      eventLogs.reverse();
 
       // TODO: Train the model with the event logs
       this.logger.log(eventLogs);
