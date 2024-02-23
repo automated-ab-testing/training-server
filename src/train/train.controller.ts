@@ -10,11 +10,11 @@ export class TrainController {
   @Post()
   addCronJob(@Body() body: AddTrainDto) {
     // Extract the name and schedule from the body
-    const { name, schedule } = body;
+    const { testId, schedule, limit } = body;
 
     try {
       // Run the addCronJob method from the train service
-      this.trainService.addCronJob(name, schedule);
+      this.trainService.addCronJob(testId, schedule, limit);
     } catch (error) {
       // If there is an error, throw a new HttpException
       throw new HttpException(
@@ -27,11 +27,11 @@ export class TrainController {
   @Delete()
   deleteCronJob(@Body() body: DeleteTrainDto) {
     // Extract the name from the body
-    const { name } = body;
+    const { testId } = body;
 
     try {
       // Run the deleteCronJob method from the train service
-      this.trainService.deleteCronJob(name);
+      this.trainService.deleteCronJob(testId);
     } catch (error) {
       // If there is an error, throw a new HttpException
       throw new HttpException(
