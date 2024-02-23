@@ -1,10 +1,15 @@
-import { Module } from '@nestjs/common';
-import { AppController } from '~/src/app.controller';
-import { AppService } from '~/src/app.service';
+import { Module, ClassSerializerInterceptor } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { ScheduleModule } from '@nestjs/schedule';
+import { TrainModule } from '~/src/train/train.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [ScheduleModule.forRoot(), TrainModule],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ClassSerializerInterceptor,
+    },
+  ],
 })
 export class AppModule {}
